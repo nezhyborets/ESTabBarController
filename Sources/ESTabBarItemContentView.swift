@@ -2,7 +2,7 @@
 //  ESTabBarContentView.swift
 //
 //  Created by Vincent Li on 2017/2/8.
-//  Copyright (c) 2013-2018 ESTabBarController (https://github.com/eggswift/ESTabBarController)
+//  Copyright (c) 2013-2017 ESTabBarController (https://github.com/eggswift/ESTabBarController)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -207,7 +207,7 @@ open class ESTabBarItemContentView: UIView {
         var f: CGFloat = 0.0 // font
         
         imageView.isHidden = (imageView.image == nil)
-        titleLabel.isHidden = (titleLabel.text == nil)
+        titleLabel.isHidden = (titleLabel.text == nil || titleLabel.text == "")
         
         if #available(iOS 11.0, *), isWide {
             s = UIScreen.main.scale == 3.0 ? 23.0 : 20.0
@@ -240,10 +240,11 @@ open class ESTabBarItemContentView: UIView {
                                               height: s)
             }
         } else if !imageView.isHidden {
-            imageView.frame = CGRect.init(x: (w - s) / 2.0,
-                                          y: (h - s) / 2.0,
-                                          width: s,
-                                          height: s)
+            imageView.sizeToFit()
+            imageView.frame = CGRect.init(x: (w - imageView.frame.size.width) / 2.0,
+                                          y: (h - imageView.frame.size.height) / 2.0,
+                                          width: imageView.frame.size.width,
+                                          height: imageView.frame.size.height)
         } else if !titleLabel.isHidden {
             titleLabel.font = UIFont.systemFont(ofSize: f)
             titleLabel.sizeToFit()
